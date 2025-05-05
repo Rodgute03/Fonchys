@@ -2,11 +2,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { promisify } from 'util';
 
 export const dynamic = 'force-dynamic'; // para que no se cachee
-
-const readFile = promisify(fs.readFile);
 
 export async function POST(req: NextRequest) {
   const data = await req.formData();
