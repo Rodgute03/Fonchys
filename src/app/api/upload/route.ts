@@ -26,7 +26,12 @@ export async function POST(req: Request) {
     const { data } = supabase.storage.from('imagenes').getPublicUrl(fileName);
 
     return NextResponse.json({ url: data.publicUrl }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown ) {
+    if (err instanceof Error) {
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+  
+    // Si no es instancia de Error, devuelves un mensaje genérico
+    return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 });
   }
 }
